@@ -26,8 +26,8 @@ public class MainActivity extends AppCompatActivity {
     // Constants:
     // TODO: Create the base URL
     private final String BASE_URL = "https://apiv2.bitcoinaverage.com/indices/global/ticker/BTC";
-    // https://apiv2.bitcoinaverage.com/indices/{symbol_set}/ticker/{symbol}
-    // https://apiv2.bitcoinaverage.com/indices/global/ticker/BTCUSD
+
+    // URL ---> https://apiv2.bitcoinaverage.com/indices/{symbol_set}/ticker/{symbol}
 
     // Member Variables:
     TextView mPriceTextView;
@@ -56,10 +56,10 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Log.d("Bitcoin", "" + parent.getItemAtPosition(position));
                 String currency = (String)(parent.getItemAtPosition(position));
-                
-                letsDoSomeNetworking(BASE_URL + currency);
 
                 Log.d("Bitcoin", "NEW URL = " + BASE_URL + currency);
+
+                letsDoSomeNetworking(BASE_URL + currency);
             }
 
             @Override
@@ -74,14 +74,12 @@ public class MainActivity extends AppCompatActivity {
     private void letsDoSomeNetworking(String url) {
 
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get(BASE_URL, new JsonHttpResponseHandler() {
+        client.get(url, new JsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 // called when response HTTP status is "200 OK"
                 Log.d("Bitcoin", "JSON: " + response.toString());
-//                WeatherDataModel weatherData = WeatherDataModel.fromJson(response);
-//                updateUI(weatherData);
             }
 
             @Override
@@ -90,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("Bitcoin", "Request fail! Status code: " + statusCode);
                 Log.d("Bitcoin", "Fail response: " + response);
                 Log.e("ERROR", e.toString());
-//                Toast.makeText(WeatherController.this, "Request Failed", Toast.LENGTH_SHORT).show();
             }
         });
 
